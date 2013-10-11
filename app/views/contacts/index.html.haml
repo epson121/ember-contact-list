@@ -1,0 +1,33 @@
+=render "/layouts/head"
+
+%script{type: 'text/x-handlebars'}
+	%ul{:class=> "nav nav-tabs"}
+		%li {{#link-to 'contacts'}}Contacts{{/link-to}}
+		%li {{#link-to 'new'}}New{{/link-to}}
+	%div
+		{{outlet}}
+
+%script{type: 'text/x-handlebars', id: "contacts"}
+	%div.container-fluid
+	%div.row-fluid
+		%div.span3
+			%table.table
+				%tr
+					%th 
+						= @contacts.each do |v|
+							%tr= v
+
+%script{type: 'text/x-handlebars', id: "new"}
+	%span.col-md-6
+		%form{ role:"form", style: "padding:1%;"}
+			%div{class: "form-group"}
+				%label{for: "inputName", class:"col-lg-2 control-label"} Name
+				{{input id="inputName" valueBinding="model.name" class="form-control input-lg"}}
+			%div{class: "form-group"}
+				%label{for: "inputEmail", class:"col-lg-2 control-label"} Email
+				{{input id="inputEmail" valueBinding="model.email" class="form-control input-lg"}}
+			%div{class: "form-group"}
+				%label{for: "inputPhone", class:"col-lg-2 control-label"} Number
+				{{input id="inputPhone" valueBinding="model.phoneNumber" class="form-control input-lg"}}
+			%div{class: "form-group"}
+				<button {{action submitAction target="controller"}} class="btn btn-submit"> Save</button>
