@@ -12,12 +12,36 @@
 	%div.row-fluid
 		%div.span3
 			%table.table
+				%th 
+					%td Contact
+					%td Phone
+					%td Email
+					%td 
+					%td 
+				{{#each m in model}}
 				%tr
-					%th 
-						= @contacts.each do |v|
-							%tr= v
+					%td
+					%td {{m.name}} 
+					%td {{m.phone}}
+					%td {{m.email}}
+					%td {{#link-to "edit" m}}Edit{{/link-to}}
+					%td {{#link-to "delete" m}}Delete{{/link-to}}
+				{{/each}}
 
 %script{type: 'text/x-handlebars', id: "new"}
+	{{render "formTemplate" this}}
+
+
+%script{type: 'text/x-handlebars', id: "edit"}
+	{{render "formTemplate" this}}
+
+%script{type: 'text/x-handlebars', id: "delete"}
+	Really delete {{model.name}} ?
+	%br
+	<button {{action 'delete'}}>Delete</button>
+	<button {{action 'dont'}}> Go back </button>
+
+%script{type: "text/x-handlebars", id: "formTemplate"}
 	%span.col-md-6
 		%form{ role:"form", style: "padding:1%;"}
 			%div{class: "form-group"}
@@ -28,6 +52,6 @@
 				{{input id="inputEmail" valueBinding="model.email" class="form-control input-lg"}}
 			%div{class: "form-group"}
 				%label{for: "inputPhone", class:"col-lg-2 control-label"} Number
-				{{input id="inputPhone" valueBinding="model.phoneNumber" class="form-control input-lg"}}
+				{{input id="inputPhone" valueBinding="model.phone" class="form-control input-lg"}}
 			%div{class: "form-group"}
 				<button {{action submitAction target="controller"}} class="btn btn-submit"> Save</button>
